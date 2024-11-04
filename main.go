@@ -80,9 +80,22 @@ func main() {
 	}
 
 	// Imprimir saida dos dados organizados
-	for _, msg := range parsedMessages {
-		fmt.Printf("%+v\n", msg)
-	}
+	// for _, msg := range parsedMessages {
+	// 	fmt.Printf("%+v\n", msg)
+	// }
 
-	// SEGUNDA PARTE
+	// Imprimindo os dados no formato final
+	for _, msg := range parsedMessages {
+		fmt.Printf("worker: %d\nDestinationWorker: %d\nmessage: \"%s\"\nmessage_listened: \"%s\"\n\n",
+			msg.Worker, msg.DestinationWorker, msg.Message, getMessageListened(msg, parsedMessages))
+	}
+}
+
+func getMessageListened(msg MessageUnmarshal, messages []MessageUnmarshal) string {
+	for _, m := range messages {
+		if m.Worker == msg.DestinationWorker {
+			return m.Message
+		}
+	}
+	return "N/A" // Caso não seja encontrada, retorna "N/A"
 }
